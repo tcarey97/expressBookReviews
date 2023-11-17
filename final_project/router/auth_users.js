@@ -51,10 +51,11 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
         let reviewer = req.session.authorisation['username'];
         if(review) {
           filtered_book['reviews'][reviewer] = review;
-          books[isbn] = filtered_book;
+          res.send(`The review for the book with ISBN  ${isbn} has been added/updated.`);
+      } else {
+          res.send("No review has been added");
       }
-      res.send(`The review for the book with ISBN  ${isbn} has been added/updated.`);
-  } else{
+    } else{
         res.send("Unable to find this ISBN!");
   }
 });
