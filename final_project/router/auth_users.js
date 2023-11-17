@@ -34,8 +34,8 @@ regd_users.post("/login", (req,res) => {
 
   if (authenticatedUser(username,password)){
       let accessToken = jwt.sign({data: password},'access', {expiresIn:60*60});
-      req.session.authorization = {accessToken, username};
-      console.log(req.session.authorization);
+      req.session.authorisation = {accessToken, username};
+      console.log(req.session.authorisation);
       return res.status(200).send("User successfully logged in");
   } else {
     return res.status(208).json({message: "Invalid Login. Check username and password"});
@@ -48,7 +48,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
     let filtered_book = books[isbn];
     if (filtered_book) {
         let review = req.query.review;
-        let reviewer = req.session.authorization['username'];
+        let reviewer = req.session.authorisation['username'];
         if(review) {
           filtered_book['reviews'][reviewer] = review;
           books[isbn] = filtered_book;
